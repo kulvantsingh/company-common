@@ -19,6 +19,14 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
+       stage('OWASP Dependency Check') {
+    steps {
+        dependencyCheck(
+            odcInstallation: 'DependencyCheck',
+            additionalArguments: '--format HTML --format XML'
+        )
+    }
+}
     }
 
     post {
@@ -31,7 +39,9 @@ pipeline {
         }
 
         always {
-            echo 'Pipeline execution completed.'
+           dependencyCheckPublisher(
+            pattern: '**/dependency-check-report.xml'
+        )
         }
     }
 }
