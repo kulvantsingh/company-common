@@ -46,6 +46,11 @@ stage('Quality Gate') {
         }
     }
 }
+stage('Deploy to Nexus') {
+    steps {
+        bat 'mvn deploy -DskipTests'
+    }
+}
     }
 
     post {
