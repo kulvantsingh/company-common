@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
- <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.company</groupId>
-
     <artifactId>company-common</artifactId>
-
     <version>1.0.1</version>
-
     <packaging>jar</packaging>
 
     <name>Company Common Library</name>
 
     <properties>
-
         <maven.compiler.source>17</maven.compiler.source>
-
         <maven.compiler.target>17</maven.compiler.target>
-
     </properties>
+
     <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://localhost:7081/repository/maven-releases/</url>
+        </repository>
 
-    <repository>
-        <id>nexus-releases</id>
-        <url>http://localhost:7081/repository/maven-releases/</url>
-    </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>http://localhost:7081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
-    <snapshotRepository>
-        <id>nexus-snapshots</id>
-        <url>http://localhost:7081/repository/maven-snapshots/</url>
-    </snapshotRepository>
+    <build>
+        <plugins>
 
-</distributionManagement>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.9.3.0</version>
+
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>spotbugs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>

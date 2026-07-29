@@ -10,23 +10,24 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Source code is checked out from GitHub by Jenkins.'
+                echo 'Source code checked out from GitHub.'
             }
         }
 
-        stage('Build') {
+        stage('Build & Verify') {
             steps {
-                bat 'mvn clean package'
+                bat 'mvn clean verify'
             }
         }
-       stage('OWASP Dependency Check') {
-    steps {
-        dependencyCheck(
-            odcInstallation: 'DependencyCheck',
-            additionalArguments: '--format HTML --format XML'
-        )
-    }
-}
+
+        stage('OWASP Dependency Check') {
+            steps {
+                dependencyCheck(
+                    odcInstallation: 'DependencyCheck',
+                    additionalArguments: '--format HTML --format XML'
+                )
+            }
+        }
     }
 
     post {
@@ -39,9 +40,9 @@ pipeline {
         }
 
         always {
-           dependencyCheckPublisher(
-            pattern: '**/dependency-check-report.xml'
-        )
+            dependencyCheckPublisher(
+                pattern: '**/dependency-check-report.xml'
+            )
         }
     }
 }
