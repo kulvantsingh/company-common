@@ -28,6 +28,24 @@ pipeline {
                 )
             }
         }
+        stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            bat '''
+                mvn sonar:sonar ^
+                -Dsonar.projectKey=company-common ^
+                -Dsonar.projectName=company-common
+            '''
+        }
+    }
+}
+stage('Quality Gate') {
+    steps {
+        timeout(time: 5, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
+}
     }
 
     post {
