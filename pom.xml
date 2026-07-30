@@ -8,7 +8,7 @@
 
     <groupId>com.company</groupId>
     <artifactId>company-common</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.7</version>
     <packaging>jar</packaging>
 
     <name>Company Common Library</name>
